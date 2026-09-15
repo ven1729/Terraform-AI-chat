@@ -1,0 +1,450 @@
+{
+  "catalog_version": "2.0",
+  "repository_name": "umbrella",
+  "branch_name": "feature",
+  "module_count": 3,
+  "dependency_count": 1,
+  "generated_at": "2026-09-15T00:00:00Z",
+  "modules": [
+    {
+      "name": "vnet",
+      "path": "modules/vnet",
+      "repository": "umbrella",
+      "provider": [
+        "azurerm"
+      ],
+      "terraform_version": ">= 1.5.0",
+      "resources": [
+        {
+          "type": "azurerm_virtual_network"
+        },
+        {
+          "type": "azurerm_subnet"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "vnet_name",
+          "type": "string",
+          "required": false,
+          "default": "example-vnet",
+          "description": "Name of the virtual network.",
+          "ui": {
+            "label": "VNet Name",
+            "control": "text"
+          }
+        },
+        {
+          "name": "resource_group_name",
+          "type": "string",
+          "required": true,
+          "description": "Name of the resource group where the VNet will be created.",
+          "ui": {
+            "label": "Resource Group",
+            "control": "text"
+          }
+        },
+        {
+          "name": "location",
+          "type": "string",
+          "required": false,
+          "default": "eastus",
+          "description": "Azure location.",
+          "ui": {
+            "label": "Azure Location",
+            "control": "select",
+            "options": [
+              "eastus",
+              "eastus2",
+              "westus2",
+              "centralus",
+              "westeurope",
+              "northeurope",
+              "centralindia",
+              "southindia",
+              "westindia"
+            ]
+          }
+        },
+        {
+          "name": "address_space",
+          "type": "list(string)",
+          "required": false,
+          "default": [
+            "10.0.0.0/16"
+          ],
+          "description": "VNet address space.",
+          "ui": {
+            "label": "Address Space",
+            "control": "list"
+          }
+        },
+        {
+          "name": "subnet_name",
+          "type": "string",
+          "required": false,
+          "default": "subnet1",
+          "description": "Subnet name.",
+          "ui": {
+            "label": "Subnet Name",
+            "control": "text"
+          }
+        },
+        {
+          "name": "subnet_prefixes",
+          "type": "list(string)",
+          "required": false,
+          "default": [
+            "10.0.1.0/24"
+          ],
+          "description": "Subnet CIDR prefixes.",
+          "ui": {
+            "label": "Subnet Prefixes",
+            "control": "list"
+          }
+        },
+        {
+          "name": "tags",
+          "type": "map(string)",
+          "required": false,
+          "default": {},
+          "description": "Tags.",
+          "ui": {
+            "label": "Tags",
+            "control": "map"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "vnet_id",
+          "type": "string"
+        },
+        {
+          "name": "subnet_id",
+          "type": "string"
+        }
+      ],
+      "dependencies": [],
+      "files": [
+        "main.tf",
+        "variables.tf",
+        "outputs.tf",
+        "provider.tf"
+      ]
+    },
+    {
+      "name": "aks",
+      "path": "modules/aks",
+      "repository": "umbrella",
+      "provider": [
+        "azurerm"
+      ],
+      "terraform_version": ">= 1.5.0",
+      "resources": [
+        {
+          "type": "azurerm_kubernetes_cluster"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "cluster_name",
+          "type": "string",
+          "required": true,
+          "description": "Name of the AKS cluster.",
+          "ui": {
+            "label": "Cluster Name",
+            "control": "text"
+          }
+        },
+        {
+          "name": "resource_group_name",
+          "type": "string",
+          "required": true,
+          "description": "Resource group.",
+          "ui": {
+            "label": "Resource Group",
+            "control": "text"
+          }
+        },
+        {
+          "name": "location",
+          "type": "string",
+          "required": false,
+          "default": "eastus",
+          "description": "Azure location.",
+          "ui": {
+            "label": "Azure Location",
+            "control": "select",
+            "options": [
+              "eastus",
+              "eastus2",
+              "westus2",
+              "centralus",
+              "westeurope",
+              "northeurope",
+              "centralindia",
+              "southindia",
+              "westindia"
+            ]
+          }
+        },
+        {
+          "name": "dns_prefix",
+          "type": "string",
+          "required": true,
+          "description": "DNS prefix.",
+          "ui": {
+            "label": "DNS Prefix",
+            "control": "text"
+          }
+        },
+        {
+          "name": "kubernetes_version",
+          "type": "string",
+          "required": false,
+          "default": "1.31",
+          "description": "Kubernetes version.",
+          "ui": {
+            "label": "Kubernetes Version",
+            "control": "text"
+          }
+        },
+        {
+          "name": "node_pool_name",
+          "type": "string",
+          "required": false,
+          "default": "system",
+          "description": "Node pool name.",
+          "ui": {
+            "label": "Node Pool Name",
+            "control": "text"
+          }
+        },
+        {
+          "name": "node_vm_size",
+          "type": "string",
+          "required": false,
+          "default": "Standard_D4s_v5",
+          "description": "Node VM size.",
+          "ui": {
+            "label": "Node VM Size",
+            "control": "text"
+          }
+        },
+        {
+          "name": "node_count",
+          "type": "number",
+          "required": false,
+          "default": 2,
+          "description": "Node count.",
+          "ui": {
+            "label": "Node Count",
+            "control": "number",
+            "min": 1
+          }
+        },
+        {
+          "name": "subnet_id",
+          "type": "string",
+          "required": true,
+          "generated": true,
+          "description": "AKS subnet ID.",
+          "ui": {
+            "control": "computed"
+          }
+        },
+        {
+          "name": "tags",
+          "type": "map(string)",
+          "required": false,
+          "default": {},
+          "description": "Tags.",
+          "ui": {
+            "label": "Tags",
+            "control": "map"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "cluster_id",
+          "type": "string"
+        },
+        {
+          "name": "fqdn",
+          "type": "string"
+        },
+        {
+          "name": "kube_admin_config_raw",
+          "type": "string"
+        }
+      ],
+      "dependencies": [
+        {
+          "module": "vnet",
+          "output": "subnet_id"
+        }
+      ],
+      "files": [
+        "main.tf",
+        "variables.tf",
+        "outputs.tf",
+        "provider.tf"
+      ]
+    },
+    {
+      "name": "storage",
+      "path": "modules/storage",
+      "repository": "umbrella",
+      "provider": [
+        "azurerm"
+      ],
+      "terraform_version": ">= 1.5.0",
+      "resources": [
+        {
+          "type": "azurerm_storage_account"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "account_name",
+          "type": "string",
+          "required": true,
+          "description": "Globally unique storage account name.",
+          "ui": {
+            "label": "Storage Account Name",
+            "control": "text"
+          }
+        },
+        {
+          "name": "resource_group_name",
+          "type": "string",
+          "required": true,
+          "description": "Resource group.",
+          "ui": {
+            "label": "Resource Group",
+            "control": "text"
+          }
+        },
+        {
+          "name": "location",
+          "type": "string",
+          "required": false,
+          "default": "eastus",
+          "description": "Azure location.",
+          "ui": {
+            "label": "Azure Location",
+            "control": "select",
+            "options": [
+              "eastus",
+              "eastus2",
+              "westus2",
+              "centralus",
+              "westeurope",
+              "northeurope",
+              "centralindia",
+              "southindia",
+              "westindia"
+            ]
+          }
+        },
+        {
+          "name": "account_tier",
+          "type": "string",
+          "required": false,
+          "default": "Standard",
+          "description": "Storage tier.",
+          "ui": {
+            "label": "Account Tier",
+            "control": "select",
+            "options": [
+              "Standard",
+              "Premium"
+            ]
+          }
+        },
+        {
+          "name": "account_replication_type",
+          "type": "string",
+          "required": false,
+          "default": "LRS",
+          "description": "Replication type.",
+          "ui": {
+            "label": "Replication Type",
+            "control": "select",
+            "options": [
+              "LRS",
+              "GRS",
+              "RAGRS",
+              "ZRS",
+              "GZRS",
+              "RAGZRS"
+            ]
+          }
+        },
+        {
+          "name": "kind",
+          "type": "string",
+          "required": false,
+          "default": "StorageV2",
+          "description": "Storage kind.",
+          "ui": {
+            "label": "Storage Kind",
+            "control": "select",
+            "options": [
+              "StorageV2",
+              "Storage",
+              "BlobStorage",
+              "BlockBlobStorage",
+              "FileStorage"
+            ]
+          }
+        },
+        {
+          "name": "enable_https_traffic_only",
+          "type": "bool",
+          "required": false,
+          "default": true,
+          "description": "HTTPS only.",
+          "ui": {
+            "label": "HTTPS Only",
+            "control": "checkbox"
+          }
+        },
+        {
+          "name": "tags",
+          "type": "map(string)",
+          "required": false,
+          "default": {},
+          "description": "Tags.",
+          "ui": {
+            "label": "Tags",
+            "control": "map"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "storage_account_id",
+          "type": "string"
+        },
+        {
+          "name": "primary_blob_endpoint",
+          "type": "string"
+        },
+        {
+          "name": "primary_connection_string",
+          "type": "string"
+        }
+      ],
+      "dependencies": [],
+      "files": [
+        "main.tf",
+        "variables.tf",
+        "outputs.tf",
+        "provider.tf"
+      ]
+    }
+  ]
+}
