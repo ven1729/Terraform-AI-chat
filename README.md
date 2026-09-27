@@ -1,3 +1,5 @@
-# Terraform-AI-chat
-AI terraform chat generator
-################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#############
+# Demo target repository
+
+Push this directory to a personal GitHub repository and create a branch named `demo-access-automation`.
+
+Do not add client secrets, real production identifiers, or access tokens.

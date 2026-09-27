@@ -1,0 +1,10 @@
+tenant_id         = "00000000-0000-0000-0000-000000000000"
+subscription_id   = "00000000-0000-0000-0000-000000000001"
+dpc_code          = "14972"
+eai_code          = "EAI-DEMO"
+environment       = "dv-0001"
+
+role_definition_keyvault_secret_officer        = "Key Vault Secrets Officer"
+role_definition_keyvault_contributor           = "Key Vault Contributor"
+role_definition_storage_blob_data_contributor  = "Storage Blob Data Contributor"
+role_definition_name_reader                    = "Reader"
