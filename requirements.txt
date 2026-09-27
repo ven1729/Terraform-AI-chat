@@ -1,5 +1,0 @@
-streamlit
-PyGithub
-python-dotenv
-requests
-python-hcl2
