@@ -1,1 +1,10 @@
-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
+$token = Read-Host "Paste GitHub token"
+$headers = @{
+    Authorization = "Bearer $token"
+    Accept = "application/vnd.github+json"
+    "X-GitHub-Api-Version" = "2026-03-10"
+}
+
+Invoke-RestMethod `
+    -Uri "https://api.github.com/user" `
+    -Headers $headers
