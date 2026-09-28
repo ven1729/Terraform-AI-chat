@@ -21,3 +21,14 @@ module "azurerm_databricks_workspace" {
   source  = "app.terraform.io/MetLife-Global/azure-databricks/azurerm"
   version = "2.2.2"
 }
+
+# Added by Terraform Access Studio; review the plan before apply.
+module "iam-role-assignment_req-demo-001" {
+  source  = "app.terraform.io/MetLife-Global/iam-role-assignment/azurerm"
+  version = "3.0.1"
+
+  role_definition = var.role_definition_storage_blob_data_contributor
+  scope           = module.storage-account.storageaccount_id
+  principal_id    = module.azurerm_databricks_workspace.databricks_access_connector_managed_identity_principal_id
+  principal_type  = "ServicePrincipal"
+}
